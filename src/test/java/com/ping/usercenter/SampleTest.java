@@ -1,11 +1,9 @@
 package com.ping.usercenter;
 
-import com.baomidou.mybatisplus.core.toolkit.Assert;
 import com.ping.usercenter.mapper.UserMapper;
 import com.ping.usercenter.model.User;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 import org.junit.runner.RunWith;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringRunner;
 
@@ -13,7 +11,7 @@ import javax.annotation.Resource;
 import java.util.List;
 
 @SpringBootTest//(classes = { UserCenterApplication.class })
-@RunWith(SpringRunner.class) //启动spring
+//@RunWith(SpringRunner.class) //使用junit的Test，启动spring
 public class SampleTest {
 
     //@Resource默认会按照JavaBean的名称去注入
