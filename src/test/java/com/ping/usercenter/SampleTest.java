@@ -12,8 +12,8 @@ import org.springframework.test.context.junit4.SpringRunner;
 import javax.annotation.Resource;
 import java.util.List;
 
-@SpringBootTest
-@RunWith(SpringRunner.class)
+@SpringBootTest//(classes = { UserCenterApplication.class })
+@RunWith(SpringRunner.class) //启动spring
 public class SampleTest {
 
     //@Resource默认会按照JavaBean的名称去注入
@@ -24,8 +24,9 @@ public class SampleTest {
     @Test
     public void testSelect() {
         System.out.println(("----- selectAll method test ------"));
-        List<User> userList = userMapper.selectList(null);
-        Assert.isTrue(5 == userList.size(), ""); //断言：我觉得
+        List<User> userList = userMapper.selectList(null); // 传空，查所有
+        //Assert.isTrue(5 == userList.size(), "");
+        org.junit.Assert.assertEquals(5, userList.size());//断言：我觉得
         userList.forEach(System.out::println);
     }
 }
