@@ -1,11 +1,18 @@
 package com.ping.usercenter.mapper;
 
+import com.ping.usercenter.model.domain.User;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
-import com.ping.usercenter.model.User;
-import org.apache.ibatis.annotations.Mapper;
 
-//定义操作数据库的方法
+/**
+* @author 21877
+* @description 针对表【user(用户)】的数据库操作Mapper
+* @createDate 2025-08-03 07:46:33
+* @Entity generator.domain.User
+*/
 public interface UserMapper extends BaseMapper<User> {
 
-
 }
+
+
+
+
