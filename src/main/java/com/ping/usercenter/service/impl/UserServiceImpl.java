@@ -9,6 +9,7 @@ import org.apache.commons.lang3.StringUtils;
 import org.springframework.stereotype.Service;
 import org.springframework.util.DigestUtils;
 
+import javax.annotation.Resource;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -24,6 +25,9 @@ import java.util.regex.Pattern;
 @Service
 public class UserServiceImpl extends ServiceImpl<UserMapper, User>
         implements UserService {
+
+    @Resource
+    private UserMapper userMapper;
     
     /**
      * 盐值，混淆密码
@@ -61,10 +65,10 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User>
         if (checkPassword.equals(userPassword)) {
             return -1;
         }
-        // 账户不能重复,查询数据库尽量放到后面，以免浪费资源
+        // 账户不+能重复,查询数据库尽量放到后面，以免浪费资源
         QueryWrapper<User> queryWrapper = new QueryWrapper<>();
         queryWrapper.eq("userAccount", userAccount);
-        long count = this.count(queryWrapper);
+        long count = userMapper.selectCount(queryWrapper);
         if (count > 0) {
             return -1;
         }
