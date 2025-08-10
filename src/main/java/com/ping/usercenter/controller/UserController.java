@@ -58,6 +58,22 @@ public class UserController {
         return userService.userLogin(userAccount, userPassword, request);
     }
 
+    @GetMapping("/current")
+    public User getCurrentUser(HttpServletRequest request) {
+        //先拿到用户态
+        Object userObj =
+                request.getSession().getAttribute(USER_LOGIN_STATE);
+        User currentUser = (User) userObj;
+        if (currentUser == null) {
+            return null;
+        }
+        //对于用户信息频繁变化的场景来说建议查库
+        long userId = currentUser.getId();
+        // TODO 校验用户是否合法
+        User user = userService.getById(userId);
+        return userService.getSafetyUser(user);
+    }
+
     @GetMapping("/search")
     public List<User> searchUsers(String username, HttpServletRequest request) {
 
@@ -71,6 +87,7 @@ public class UserController {
             queryWrapper.like("username", username); // like 允许包含
         }
         List<User> userList = userService.list(queryWrapper);
+        //过滤密码
         // Java8 遍历userList的每一个元素，把元素密码设置为空再拼成list返回
         return userList.stream().map(user -> {
             return userService.getSafetyUser(user);
