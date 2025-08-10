@@ -1,7 +1,6 @@
 package com.ping.usercenter.controller;
 
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
-import com.ping.usercenter.contant.UserConstant;
 import com.ping.usercenter.model.domain.User;
 import com.ping.usercenter.model.domain.request.UserLoginRequest;
 import com.ping.usercenter.model.domain.request.UserRegisterRequest;
@@ -66,9 +65,10 @@ public class UserController {
         if (!isAdmin(request)) {
             return new ArrayList<>();
         }
+
         QueryWrapper<User> queryWrapper = new QueryWrapper<>();
-        if (StringUtils.isAnyBlank(username)) {
-            queryWrapper.like("username", username);
+        if (StringUtils.isNotBlank(username)) {
+            queryWrapper.like("username", username); // like 允许包含
         }
         List<User> userList = userService.list(queryWrapper);
         // Java8 遍历userList的每一个元素，把元素密码设置为空再拼成list返回

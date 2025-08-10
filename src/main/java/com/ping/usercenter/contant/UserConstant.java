@@ -3,6 +3,8 @@ package com.ping.usercenter.contant;
 /**
  * 用户常量
  *
+ * 默认public static
+ *
  * @author ping
  */
 public interface UserConstant {
@@ -13,7 +15,7 @@ public interface UserConstant {
     String USER_LOGIN_STATE = "userLoginState";
 
     /**
-     * 用户登录态键
+     * 默认权限
      */
     int DEFAULT_ROLE = 0;
 
