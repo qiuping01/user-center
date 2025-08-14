@@ -1,11 +1,12 @@
 package com.ping.usercenter.common;
 
+import lombok.Data;
+
 /**
  * 错误码
  *
  * @author ping
  */
-
 public enum ErrorCode {
 
     SUCCESS(0,"ok",""),
@@ -32,4 +33,18 @@ public enum ErrorCode {
         this.message = message;
         this.description = description;
     }
+
+    public int getCode() {
+        return code;
+    }
+
+    public String getMessage() {
+        return message;
+    }
+
+    public String getDescription() {
+        return description;
+    }
+
+    //枚举值不支持setter
 }
