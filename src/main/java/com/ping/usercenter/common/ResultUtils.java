@@ -23,8 +23,42 @@ public class ResultUtils {
      * @return
      */
     public static BaseResponse error(ErrorCode errorCode) {
-        return new BaseResponse<>(errorCode.getCode(),null,
+        return new BaseResponse(errorCode.getCode(),null,
                 errorCode.getMessage(), errorCode.getDescription());
         //也可以写 return BaseResponse<>(errorCode); 一样的
     }
+
+    /**
+     * 失败
+     * @param code
+     * @param message
+     * @param description
+     * @return
+     */
+    public static BaseResponse error(int code, String message, String description) {
+        return new BaseResponse(code, message, description);
+    }
+
+    /**
+     * 失败
+     * @param errorCode
+     * @param message
+     * @param description
+     * @return
+     */
+    public static BaseResponse error(ErrorCode errorCode,String message,
+                                     String description) {
+        return new BaseResponse(errorCode.getCode(),message,description);
+    }
+
+    /**
+     * 失败
+     * @param errorCode
+     * @param description
+     * @return
+     */
+    public static BaseResponse error(ErrorCode errorCode,String description) {
+        return new BaseResponse(errorCode.getCode(),errorCode.getMessage(),description);
+    }
+
 }

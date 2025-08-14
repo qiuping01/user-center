@@ -2,7 +2,9 @@ package com.ping.usercenter.controller;
 
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.ping.usercenter.common.BaseResponse;
+import com.ping.usercenter.common.ErrorCode;
 import com.ping.usercenter.common.ResultUtils;
+import com.ping.usercenter.exception.BusinessException;
 import com.ping.usercenter.model.domain.User;
 import com.ping.usercenter.model.domain.request.UserLoginRequest;
 import com.ping.usercenter.model.domain.request.UserRegisterRequest;
@@ -34,7 +36,7 @@ public class UserController {
     @PostMapping("/register")
     public BaseResponse<Long> userRegister(@RequestBody UserRegisterRequest userRegisterRequest) {
         if (userRegisterRequest == null) {
-            return null;
+            throw new BusinessException(ErrorCode.PARMS_ERROR);
         }
         String userAccount = userRegisterRequest.getUserAccount();
         String userPassword = userRegisterRequest.getUserPassword();
@@ -97,7 +99,7 @@ public class UserController {
 
         // 鉴权 - 仅管理员可查询
         if (!isAdmin(request)) {
-            return null;
+            throw new BusinessException(ErrorCode.PARMS_ERROR);
         }
 
         QueryWrapper<User> queryWrapper = new QueryWrapper<>();

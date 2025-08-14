@@ -2,6 +2,8 @@ package com.ping.usercenter.service.impl;
 
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
+import com.ping.usercenter.common.ErrorCode;
+import com.ping.usercenter.exception.BusinessException;
 import com.ping.usercenter.model.domain.User;
 import com.ping.usercenter.service.UserService;
 import com.ping.usercenter.mapper.UserMapper;
@@ -56,17 +58,16 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User>
         // 1. 校验
         if (StringUtils.isAnyBlank(userAccount, userPassword, checkPassword,
                 planetCode)) {
-            //todo 修改为自定义异常
-            return -1;
+            throw new BusinessException(ErrorCode.PARMS_ERROR,"参数为空");
         }
         if (userAccount.length() < 4) {
-            return -1;
+            throw new BusinessException(ErrorCode.PARMS_ERROR,"用户账号过短");
         }
         if (userPassword.length() < 8 || checkPassword.length() < 8) {
-            return -1;
+            throw new BusinessException(ErrorCode.PARMS_ERROR,"用户密码过短");
         }
         if (planetCode.length() > 5) {
-            return -1;
+            throw new BusinessException(ErrorCode.PARMS_ERROR,"星球编号过长");
         }
         // 账户不能包含特殊字符
         String validPattern = "[`~!@#$%^&*()+=|{}':;',\\\\[\\\\].<>/?~！@#￥%……&*（）——+|{}【】‘；：”“’。，、？]";
