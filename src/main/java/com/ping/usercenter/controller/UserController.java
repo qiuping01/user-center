@@ -37,10 +37,12 @@ public class UserController {
         String userAccount = userRegisterRequest.getUserAccount();
         String userPassword = userRegisterRequest.getUserPassword();
         String checkPassword = userRegisterRequest.getUserPassword();
-        if (StringUtils.isAnyBlank(userAccount, userPassword, checkPassword)) {
+        String planetCode = userRegisterRequest.getPlanetCode();
+        if (StringUtils.isAnyBlank(userAccount, userPassword, checkPassword, planetCode)) {
             return null;
         }
-        return userService.userRegister(userAccount, userPassword, checkPassword);
+        return userService.userRegister(userAccount, userPassword,
+                checkPassword,planetCode);
     }
 
 
@@ -58,6 +60,14 @@ public class UserController {
         return userService.userLogin(userAccount, userPassword, request);
     }
 
+    @PostMapping("/logout")
+    public Integer userLogout(HttpServletRequest request) {
+        if (request == null) {
+            return null;
+        }
+        return userService.userLogout(request);
+    }
+
     @GetMapping("/current")
     public User getCurrentUser(HttpServletRequest request) {
         //先拿到用户态
@@ -70,7 +80,7 @@ public class UserController {
         //对于用户信息频繁变化的场景来说建议查库
         long userId = currentUser.getId();
         // TODO 校验用户是否合法
-        User user = userService.getById(userId);
+        User user = userService.getById(userId); //查数据库
         return userService.getSafetyUser(user);
     }
 
