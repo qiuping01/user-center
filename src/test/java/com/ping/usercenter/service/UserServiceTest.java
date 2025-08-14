@@ -43,7 +43,7 @@ class UserServiceTest {
     @Test
     void userRegister() {
         // 测试场景1：密码为空
-        String userAccount = "ping";
+        String userAccount = "pinoog";
         String userPassword = "";
         String checkPassword = "123456";
         String planetCode = "1";
