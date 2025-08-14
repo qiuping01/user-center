@@ -1,6 +1,8 @@
 package com.ping.usercenter.controller;
 
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
+import com.ping.usercenter.common.BaseResponse;
+import com.ping.usercenter.common.ResultUtils;
 import com.ping.usercenter.model.domain.User;
 import com.ping.usercenter.model.domain.request.UserLoginRequest;
 import com.ping.usercenter.model.domain.request.UserRegisterRequest;
@@ -30,7 +32,7 @@ public class UserController {
     private UserService userService;
 
     @PostMapping("/register")
-    public Long userRegister(@RequestBody UserRegisterRequest userRegisterRequest) {
+    public BaseResponse<Long> userRegister(@RequestBody UserRegisterRequest userRegisterRequest) {
         if (userRegisterRequest == null) {
             return null;
         }
@@ -41,13 +43,15 @@ public class UserController {
         if (StringUtils.isAnyBlank(userAccount, userPassword, checkPassword, planetCode)) {
             return null;
         }
-        return userService.userRegister(userAccount, userPassword,
+        long result = userService.userRegister(userAccount, userPassword,
                 checkPassword,planetCode);
+        return ResultUtils.success(result);
     }
 
 
     @PostMapping("/login")
-    public User userLogin(@RequestBody UserLoginRequest userLoginRequest, HttpServletRequest request) {
+    public BaseResponse<User> userLogin(@RequestBody UserLoginRequest userLoginRequest,
+                           HttpServletRequest request) {
         if (userLoginRequest == null) {
             return null;
         }
@@ -57,19 +61,21 @@ public class UserController {
         if (StringUtils.isAnyBlank(userAccount, userPassword)) {
             return null;
         }
-        return userService.userLogin(userAccount, userPassword, request);
+        User user =  userService.userLogin(userAccount, userPassword, request);
+        return ResultUtils.success(user);
     }
 
     @PostMapping("/logout")
-    public Integer userLogout(HttpServletRequest request) {
+    public BaseResponse<Integer> userLogout(HttpServletRequest request) {
         if (request == null) {
             return null;
         }
-        return userService.userLogout(request);
+        int result = userService.userLogout(request);
+        return ResultUtils.success(result);
     }
 
     @GetMapping("/current")
-    public User getCurrentUser(HttpServletRequest request) {
+    public BaseResponse<User> getCurrentUser(HttpServletRequest request) {
         //先拿到用户态
         Object userObj =
                 request.getSession().getAttribute(USER_LOGIN_STATE);
@@ -81,15 +87,17 @@ public class UserController {
         long userId = currentUser.getId();
         // TODO 校验用户是否合法
         User user = userService.getById(userId); //查数据库
-        return userService.getSafetyUser(user);
+        User safetyUser = userService.getSafetyUser(user);
+        return ResultUtils.success(safetyUser);
     }
 
     @GetMapping("/search")
-    public List<User> searchUsers(String username, HttpServletRequest request) {
+    public BaseResponse<List<User>> searchUsers(String username,
+                                   HttpServletRequest request) {
 
         // 鉴权 - 仅管理员可查询
         if (!isAdmin(request)) {
-            return new ArrayList<>();
+            return null;
         }
 
         QueryWrapper<User> queryWrapper = new QueryWrapper<>();
@@ -99,21 +107,24 @@ public class UserController {
         List<User> userList = userService.list(queryWrapper);
         //过滤密码
         // Java8 遍历userList的每一个元素，把元素密码设置为空再拼成list返回
-        return userList.stream().map(user -> {
+        List<User> list = userList.stream().map(user -> {
             return userService.getSafetyUser(user);
         }).collect(Collectors.toList());
+        return ResultUtils.success(list);
     }
 
     @PostMapping("/delete")
-    public boolean deleteUser(@RequestBody long id, HttpServletRequest request) {
+    public BaseResponse<Boolean> deleteUser(@RequestBody long id,
+                               HttpServletRequest request) {
         // 鉴权 - 仅管理员可查询
         if (!isAdmin(request)) {
-            return false;
+            return null;
         }
         if (id <= 0) {
-            return false;
+            return null;
         }
-        return userService.removeById(id);
+        boolean b = userService.removeById(id);
+        return ResultUtils.success(b);
     }
 
     /**
