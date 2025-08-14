@@ -43,7 +43,7 @@ public class UserController {
         String checkPassword = userRegisterRequest.getUserPassword();
         String planetCode = userRegisterRequest.getPlanetCode();
         if (StringUtils.isAnyBlank(userAccount, userPassword, checkPassword, planetCode)) {
-            return null;
+            throw new BusinessException(ErrorCode.PARMS_ERROR);
         }
         long result = userService.userRegister(userAccount, userPassword,
                 checkPassword,planetCode);
@@ -55,13 +55,13 @@ public class UserController {
     public BaseResponse<User> userLogin(@RequestBody UserLoginRequest userLoginRequest,
                            HttpServletRequest request) {
         if (userLoginRequest == null) {
-            return null;
+            throw new BusinessException(ErrorCode.PARMS_ERROR);
         }
         String userAccount = userLoginRequest.getUserAccount();
         String userPassword = userLoginRequest.getUserPassword();
 
         if (StringUtils.isAnyBlank(userAccount, userPassword)) {
-            return null;
+            throw new BusinessException(ErrorCode.PARMS_ERROR);
         }
         User user =  userService.userLogin(userAccount, userPassword, request);
         return ResultUtils.success(user);
@@ -70,7 +70,7 @@ public class UserController {
     @PostMapping("/logout")
     public BaseResponse<Integer> userLogout(HttpServletRequest request) {
         if (request == null) {
-            return null;
+            throw new BusinessException(ErrorCode.PARMS_ERROR);
         }
         int result = userService.userLogout(request);
         return ResultUtils.success(result);
@@ -83,7 +83,7 @@ public class UserController {
                 request.getSession().getAttribute(USER_LOGIN_STATE);
         User currentUser = (User) userObj;
         if (currentUser == null) {
-            return null;
+            throw new BusinessException(ErrorCode.PARMS_ERROR);
         }
         //对于用户信息频繁变化的场景来说建议查库
         long userId = currentUser.getId();
@@ -120,10 +120,10 @@ public class UserController {
                                HttpServletRequest request) {
         // 鉴权 - 仅管理员可查询
         if (!isAdmin(request)) {
-            return null;
+            throw new  BusinessException(ErrorCode.NO_AUTH);
         }
         if (id <= 0) {
-            return null;
+            throw new BusinessException(ErrorCode.PARMS_ERROR);
         }
         boolean b = userService.removeById(id);
         return ResultUtils.success(b);
