@@ -28,6 +28,8 @@ import static com.ping.usercenter.contant.UserConstant.USER_LOGIN_STATE;
  */
 @RestController
 @RequestMapping("/user")
+//@CrossOrigin(origins = { "http://user.qiutang.icu"}, allowCredentials =
+// "true")
 public class UserController {
 
     @Resource
