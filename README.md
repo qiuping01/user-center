@@ -56,19 +56,19 @@
 
 注册页
 
-![image-20250816174331778](C:/Users/21877/Desktop/image-20250816174331778.png)
+![image-20250816174331778](https://i-blog.csdnimg.cn/direct/b66afd46721c4eb1a8eaa3c7a110a5d8.png)
 
 
 
 欢迎页
 
-![image-20250816174433741](C:/Users/21877/Desktop/image-20250816174433741.png)
+![image-20250816174433741](https://i-blog.csdnimg.cn/direct/aa0605042c3c4f99b52cf34fa2e9b541.png)
 
 
 
 管理页
 
-![image-20250816174517340](C:/Users/21877/Desktop/image-20250816174517340.png)
+![image-20250816174517340](https://i-blog.csdnimg.cn/direct/a132b465a6b14a26ad123611018eaacf.png)
 
 ---
 
@@ -509,31 +509,31 @@ Docker 是一种容器技术，可以将多种不同的应用程序、组件、�
 
    2. 创建证书
 
-      ![image-20250816225235744](C:/Users/21877/Desktop/image-20250816225235744.png)
+      ![image-20250816225235744](https://i-blog.csdnimg.cn/direct/5852595b805a4f47be2328d1adac4ee5.png)
 
    3. 选择免费证书
 
-      ![image-20250816225349022](C:/Users/21877/Desktop/image-20250816225349022.png)
+      ![image-20250816225349022](https://i-blog.csdnimg.cn/direct/da6d27a852994706a1e83a6f1c37309c.png)
 
    4. 输入域名，注意格式要求，点击下一步
 
    5. 按照要求解析
 
-      ![image-20250816225549528](C:/Users/21877/Desktop/image-20250816225549528.png)
+      ![image-20250816225549528](https://i-blog.csdnimg.cn/direct/3755cbb64ddb4e058b8854b6fb2b86ca.png)
 
    6. 解析完成后验证并创建
 
-      ![image-20250816225636319](C:/Users/21877/Desktop/image-20250816225636319.png)
+      ![image-20250816225636319](https://i-blog.csdnimg.cn/direct/71c7f7bcdd6349e9b54b698556aaa8ac.png)
 
    7. 查看证书文件
 
-      ![image-20250816225747749](C:/Users/21877/Desktop/image-20250816225747749.png)
+      ![image-20250816225747749](https://i-blog.csdnimg.cn/direct/4cf7859a9f0043a59da93003cd8b4b8b.png)
 
-      ![image-20250816225819268](C:/Users/21877/Desktop/image-20250816225819268.png)
+      ![image-20250816225819268](https://i-blog.csdnimg.cn/direct/0d47c8caf2da4ee9b0df3a1c1f7ac036.png)
 
    8. 配置到前后端域名上
 
-      ![image-20250816225926465](C:/Users/21877/Desktop/image-20250816225926465.png)
+      ![image-20250816225926465](https://i-blog.csdnimg.cn/direct/4c1f3c21ad374bc7be5fa4a87a798ad9.png)
 
 3. ssl部署成功后，在后端域名中配置反向代理
 
@@ -566,6 +566,7 @@ location ^~ /api/ {
 ### 13.**什么是双亲委派模式？**
 
 双亲委派模式（Parent Delegation Model）是 Java 类加载机制的核心设计原则，用于确保类的安全加载和唯一性。其核心思想是：**当一个类加载器收到加载请求时，首先将任务委托给父类加载器处理，依次向上传递；只有父类加载器无法完成加载时，子加载器才会尝试加载**。
+
 
 
 
